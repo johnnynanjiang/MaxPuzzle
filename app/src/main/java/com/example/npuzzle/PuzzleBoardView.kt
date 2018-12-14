@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 
 @SuppressLint("ViewConstructor")
 /**
@@ -27,6 +29,8 @@ class PuzzleBoardView(context: Context, val n: Int) : View(context) {
     private val mat = Array(n) { Array(n) { PuzzleBlock(context, 0, 0F, 0F, 0F) } }
 
     private var emptyBlockIndex = Point(n - 1, n - 1)
+
+    private var limitOfMove = 20
 
     init {
         paint.isAntiAlias = true
@@ -94,6 +98,22 @@ class PuzzleBoardView(context: Context, val n: Int) : View(context) {
     }
 
     private fun makeMove(i: Int, j: Int) {
+        limitOfMove = limitOfMove - 1
+
+        if (limitOfMove == 0) {
+            val alertDialog = AlertDialog.Builder(context).create()
+            alertDialog.setTitle("Oops!")
+            alertDialog.setCancelable(false)
+            alertDialog.setMessage("No more moves.")
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Ok") { dialog, _ ->
+                // refresh the game
+                initGame()
+                invalidate()
+                dialog.dismiss()
+            }
+            alertDialog.show()
+        }
+
         swapBlock(i, j)
         invalidate()
         if (isSolution()) {
