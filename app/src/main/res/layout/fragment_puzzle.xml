@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:weightSum="10"
               android:orientation="vertical">
 
     <TextView
             android:id="@+id/textView_instruction"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
@@ -15,7 +17,8 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
         <Button
@@ -45,8 +48,18 @@
             android:id="@+id/puzzle_container"
             android:layout_margin="30dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="7">
 
     </RelativeLayout>
+
+    <TextView
+            android:id="@+id/move_limit"
+            android:layout_margin="10dp"
+            android:text="You have 20 moves"
+            android:textAlignment="viewEnd"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
 </LinearLayout>
