@@ -1,6 +1,7 @@
 package com.example.npuzzle
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.FragmentManager
 import android.content.Context
 import android.graphics.Canvas
@@ -10,8 +11,7 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
+import android.widget.TextView
 
 @SuppressLint("ViewConstructor")
 /**
@@ -30,7 +30,7 @@ class PuzzleBoardView(context: Context, val n: Int) : View(context) {
 
     private var emptyBlockIndex = Point(n - 1, n - 1)
 
-    private var limitOfMove = 20
+    private var moves = 0
 
     init {
         paint.isAntiAlias = true
@@ -53,6 +53,9 @@ class PuzzleBoardView(context: Context, val n: Int) : View(context) {
             y += size
         }
         shuffleMat()
+
+        moves = 20
+        displayMoveLimit()
     }
 
     private fun shuffleMat() {
@@ -97,10 +100,16 @@ class PuzzleBoardView(context: Context, val n: Int) : View(context) {
         emptyBlockIndex = Point(i, j)
     }
 
-    private fun makeMove(i: Int, j: Int) {
-        limitOfMove = limitOfMove - 1
+    private fun displayMoveLimit() {
+        (context as Activity).findViewById<TextView>(R.id.text_moves).text = "You have ${moves} moves"
+    }
 
-        if (limitOfMove == 0) {
+    private fun decreaseMoveLimit() {
+        moves = moves - 1
+
+        displayMoveLimit()
+
+        if (moves <= 0) {
             val alertDialog = AlertDialog.Builder(context).create()
             alertDialog.setTitle("Oops!")
             alertDialog.setCancelable(false)
@@ -113,6 +122,10 @@ class PuzzleBoardView(context: Context, val n: Int) : View(context) {
             }
             alertDialog.show()
         }
+    }
+
+    private fun makeMove(i: Int, j: Int) {
+        decreaseMoveLimit()
 
         swapBlock(i, j)
         invalidate()

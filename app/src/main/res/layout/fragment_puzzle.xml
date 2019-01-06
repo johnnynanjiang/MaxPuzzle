@@ -54,12 +54,13 @@
     </RelativeLayout>
 
     <TextView
-            android:id="@+id/move_limit"
+            android:id="@+id/text_moves"
             android:layout_margin="10dp"
             android:text="You have 20 moves"
             android:textAlignment="viewEnd"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_gravity="end"/>
 
 </LinearLayout>
